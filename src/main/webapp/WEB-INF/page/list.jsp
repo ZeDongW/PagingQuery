@@ -38,11 +38,25 @@
         <tr>
             <td colspan="3" align="center">
                 每页显示行数<input type="text" style="width: 20px" value="${requestScope.pb.pageCount}" onkeyup="this.value=this.value.replace(/\D/g,'')" onblur='checkPageCount()' id='pageCount'/>&nbsp;&nbsp;
-                当前${requestScope.pb.currPage }/${requestScope.pb.totalPage }页&nbsp;&nbsp;
-                <a href="${pageContext.request.contextPath}/index?currPage=1">首页</a>&nbsp;&nbsp;
-                <a href="${pageContext.request.contextPath}/index?currPage=${requestScope.pb.currPage-1}&pageCount=${requestScope.pb.pageCount}">上一页 </a>&nbsp;&nbsp;
-                <a href="${pageContext.request.contextPath}/index?currPage=${requestScope.pb.currPage+1}&pageCount=${requestScope.pb.pageCount}">下一页 </a>&nbsp;&nbsp;
-                <a href="${pageContext.request.contextPath}/index?currPage=${requestScope.pb.totalPage}&pageCount=${requestScope.pb.pageCount}">末页</a>
+                当前${requestScope.pb.currPage}/${requestScope.pb.totalPage}页&nbsp;&nbsp;
+                <c:choose>
+                    <c:when test="${requestScope.pb.currPage  == 1}">
+                        首页&nbsp;&nbsp;上一页
+                        <a href="${pageContext.request.contextPath}/index?currPage=${requestScope.pb.currPage+1}&pageCount=${requestScope.pb.pageCount}">下一页 </a>&nbsp;&nbsp;
+                        <a href="${pageContext.request.contextPath}/index?currPage=${requestScope.pb.totalPage}&pageCount=${requestScope.pb.pageCount}">末页</a>
+                    </c:when>
+                    <c:when test="${requestScope.pb.currPage == requestScope.pb.totalPage}">
+                        <a href="${pageContext.request.contextPath}/index?currPage=1&pageCount=${requestScope.pb.pageCount}">首页</a>&nbsp;&nbsp;
+                        <a href="${pageContext.request.contextPath}/index?currPage=${requestScope.pb.currPage-1}&pageCount=${requestScope.pb.pageCount}">上一页 </a>&nbsp;&nbsp;
+                        下一页&nbsp;&nbsp;末页
+                    </c:when>
+                    <c:otherwise>
+                        <a href="${pageContext.request.contextPath}/index?currPage=1&pageCount=${requestScope.pb.pageCount}">首页</a>&nbsp;&nbsp;
+                        <a href="${pageContext.request.contextPath}/index?currPage=${requestScope.pb.currPage-1}&pageCount=${requestScope.pb.pageCount}">上一页 </a>&nbsp;&nbsp;
+                        <a href="${pageContext.request.contextPath}/index?currPage=${requestScope.pb.currPage+1}&pageCount=${requestScope.pb.pageCount}">下一页 </a>&nbsp;&nbsp;
+                        <a href="${pageContext.request.contextPath}/index?currPage=${requestScope.pb.totalPage}&pageCount=${requestScope.pb.pageCount}">末页</a>
+                    </c:otherwise>
+                </c:choose>
             </td>
         </tr>
     </table>
